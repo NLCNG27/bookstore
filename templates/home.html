@@ -1,0 +1,29 @@
+<!--templates/home.html-->
+{% extends "base.html" %}
+
+{% block content %}
+
+<div>
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Book</th>
+                <th scope="col">Author</th>
+                <th scope="col">Publication Year</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for book in book_list %}
+            <tr>
+                <td><a href="">{{ book.title }}</a></td>
+                <td>{{ book.author }}</td>
+                <td>{{ book.year }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+</div>
+
+
+{% endblock content %}
