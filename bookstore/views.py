@@ -2,12 +2,14 @@
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
+from django.core.paginator import Paginator
 from .models import Book
 
 
 class BookstoreListView(ListView):
     model = Book
     template_name = "home.html"
+    paginate_by = 10                # specify max number in a page for pagination
 
 
 class BookstoreDetailView(DetailView):
@@ -19,6 +21,7 @@ class BookstoreCreateView(CreateView):
     model = Book
     template_name = "book_new.html"
     fields = ["title", "author", "year"]
+    success_url = reverse_lazy("home")
 
 
 class BookstoreUpdateView(UpdateView):
