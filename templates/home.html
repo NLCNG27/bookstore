@@ -3,52 +3,61 @@
 
 {% block content %}
 
-<div>
-    <table class="table">
-        <thead class="thead-light">
-            <tr>
-                <th scope="col">Book</th>
-                <th scope="col">Author</th>
-                <th scope="col">Publication Year</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for book in book_list %}
-            <tr>
-                <td><a href="{% url 'book_detail' book.pk %}">{{ book.title }}</a></td>
-                <td>{{ book.author }}</td>
-                <td>{{ book.year }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+{% if user.is_authenticated %}
+    <p>Hello {{ user.username }}!</p>
+    <a href="{% url 'logout' %}">Log Out</a>
 
-    <!--Paginating ListView-->
-    {% if is_paginated %}
-        <div class="pagination">
-            <span class="step-links">
-                {% if page_obj.has_previous %}
-                    <a href="?page=1">&laquo; first</a>
-                    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-                {% endif %}
+    <div>
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Book Title</th>
+                    <th scope="col">Author</th>
+                    <th scope="col">Publication Year</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for book in book_list %}
+                <tr>
+                    <td><a href="{% url 'book_detail' book.pk %}">{{ book.title }}</a></td>
+                    <td>{{ book.author }}</td>
+                    <td>{{ book.year }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
 
-                <span class="current">
-                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        <!--Paginating ListView-->
+        {% if is_paginated %}
+            <div class="pagination">
+                <span class="step-links">
+                    {% if page_obj.has_previous %}
+                        <a href="?page=1">&laquo; first</a>
+                        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                    {% endif %}
+
+                    <span class="current">
+                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                    </span>
+
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}">next</a>
+                        <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                    {% endif %}
+
                 </span>
+            </div>
+        {% endif %}
 
-                {% if page_obj.has_next %}
-                    <a href="?page={{ page_obj.next_page_number }}">next</a>
-                    <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-                {% endif %}
+        <a class="btn btn-primary" href="{% url 'book_new' %}">New Book</a>
+    <!--    <a class="btn btn-danger" href="">Delete</a>-->
+    </div>
 
-            </span>
-        </div>
-    {% endif %}
 
-    <a class="btn btn-primary" href="{% url 'book_new' %}">New Book</a>
-<!--    <a class="btn btn-danger" href="">Delete</a>-->
-
-</div>
-
+{% else %}
+    <p>You are not logged in.</p>
+    <a href="{% url 'login' %}">Log In</a> |
+    <a href="{% url 'signup' %}">Sign Up</a>
+{% endif %}
 
 {% endblock content %}

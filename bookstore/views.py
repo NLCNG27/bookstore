@@ -2,7 +2,6 @@
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
-from django.core.paginator import Paginator
 from .models import Book
 
 
@@ -34,3 +33,6 @@ class BookstoreDeleteView(DeleteView):
     model = Book
     template_name = "book_delete.html"
     success_url = reverse_lazy("home")
+
+
+

@@ -3,7 +3,7 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<h1>Delete book entry</h1>
+<h2>Delete book entry</h2>
 <form action="" method="post">{% csrf_token %}
     <p>Are you sure you want to delete "{{ book.title }}" entry?</p>
     <input class="btn btn-success" type="submit" value="Confirm">
